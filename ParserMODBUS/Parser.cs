@@ -60,6 +60,11 @@ namespace ParserMODBUS
             raw_data = _raw_data;
             raw_frame = $"{address} {_command} {raw_data} {_crc}";
         }
+
+        public void Set(string _command, string _crc, string _raw_data)
+        {
+            Set(address, _command, _crc, _raw_data);
+        }
     }
 
     [Serializable]
@@ -93,9 +98,10 @@ namespace ParserMODBUS
 
         private void FileToLogs(string fileName)
         {
-            StreamReader file = File.OpenText(fileName);
+            StreamReader file = new StreamReader(fileName);
             string line;
             m_data = new Data();
+            bool separate = false;
             while ((line = file.ReadLine()) != null)
             {
                 line = line.Replace('\t', ' ');
@@ -115,7 +121,10 @@ namespace ParserMODBUS
                             { address = address });
                             idx = m_data.m_logs.Count - 1;
                         }
-                        m_data.m_logs[idx].lines.Add(new Line() { direction = "request" });
+                        if (!separate)
+                        {
+                            m_data.m_logs[idx].lines.Add(new Line() { direction = "request" });
+                        }
                     }
                     if (splitLine[i] == "IRP_MJ_READ")
                     {
@@ -127,7 +136,10 @@ namespace ParserMODBUS
                             { address = address });
                             idx = m_data.m_logs.Count - 1;
                         }
-                        m_data.m_logs[idx].lines.Add(new Line() { direction = "response" });
+                        if (!separate)
+                        {
+                            m_data.m_logs[idx].lines.Add(new Line() { direction = "response" });
+                        }
                     }
                     if (splitLine[i] == "Length")
                     {
@@ -139,14 +151,27 @@ namespace ParserMODBUS
                             break;
                         }
                         var addr = splitLine[i + 2];
-                        var command = splitLine[i + 3];
+                        if (length == 1)
+                        {
+                            m_data.m_logs[idx].lines[idx_2].address = addr;
+                            separate = true;
+                            break;
+                        }
+                        int minus = separate ? 1 : 0;
+                        var command = splitLine[i + 3 - minus];
                         var crc = splitLine[i + length] + ' ' + splitLine[i + length + 1];
-                        var raw_data = splitLine[i + 4];
-                        for (int j = i + 5; j < i + length; j++)
+                        var raw_data = splitLine[i + 4 - minus];
+                        for (int j = i + 5 - minus; j < i + length; ++j)
                         {
                             raw_data += ' ' + splitLine[j];
                         }
-                        m_data.m_logs[idx].lines[idx_2].Set(addr, command, crc, raw_data);
+                        if (separate)
+                            m_data.m_logs[idx].lines[idx_2].Set(command, crc, raw_data);
+                        else
+                            m_data.m_logs[idx].lines[idx_2].Set(addr, command, crc, raw_data);
+
+                        //m_data.m_logs[idx].lines[idx_2].raw_frame;
+                        separate = false;
                         break;
                     }
                 }
@@ -201,8 +226,6 @@ namespace ParserMODBUS
                     sw.WriteLine("\t}\n}");
                 }
             }
-
-
         }
 
         public void ToXML(string fileName)
@@ -241,6 +264,27 @@ namespace ParserMODBUS
             }
         }
 
-       
+        public static uint CRC16(byte[] data, int data_size)
+        {
+            const uint MODBUS_CRC_CONST = 0xA001;
+            uint CRC = 0xFFFF;
+
+            for (int i = 0; i < data_size; i++)
+            {
+                CRC ^= (uint)data[i];
+                for (int k = 0; k < 8; k++)
+                {
+                    if ((CRC & 0x01) == 1)
+                    {
+                        CRC >>= 1;
+                        CRC ^= MODBUS_CRC_CONST;
+                    }
+                    else
+                        CRC >>= 1;
+                }
+            }
+
+            return CRC;
+        }
     }
 }

@@ -17,45 +17,29 @@
       <raw_frame>68 46 01 6A 02 AE 20</raw_frame>
       <raw_data>01 6A 02</raw_data>
     </line>
-    <line direction="response" address="68" command="" crc="1:68">
-      <raw_frame>68   1: 68</raw_frame>
-      <raw_data />
-    </line>
-    <line direction="response" address="46" command="02" crc="71BC">
-      <raw_frame>46 02 03 12 71 BC</raw_frame>
-      <raw_data>03 12</raw_data>
+    <line direction="response" address="68" command="46:Read EEPROM" crc="71BC">
+      <raw_frame>68 46 02 03 12 71 BC</raw_frame>
+      <raw_data>02 03 12</raw_data>
     </line>
     <line direction="request" address="68" command="04:Read Input Registers" crc="F93A">
       <raw_frame>68 04 00 10 00 10 F9 3A</raw_frame>
       <raw_data>00 10 00 10</raw_data>
     </line>
-    <line direction="response" address="68" command="" crc="1:68">
-      <raw_frame>68   1: 68</raw_frame>
-      <raw_data />
+    <line direction="response" address="68" command="04:Read Input Registers" crc="1600">
+      <raw_frame>68 04 20 00 00 00 00 00 00 00 00 00 04 00 2E 00 2C 00 00 01 02 00 72 00 32 00 19 00 17 00 16 00</raw_frame>
+      <raw_data>20 00 00 00 00 00 00 00 00 00 04 00 2E 00 2C 00 00 01 02 00 72 00 32 00 19 00 17 00</raw_data>
     </line>
-    <line direction="response" address="04" command="20" crc="1600">
-      <raw_frame>04 20 00 00 00 00 00 00 00 00 00 04 00 2E 00 2C 00 00 01 02 00 72 00 32 00 19 00 17 00 16 00</raw_frame>
-      <raw_data>00 00 00 00 00 00 00 00 00 04 00 2E 00 2C 00 00 01 02 00 72 00 32 00 19 00 17 00</raw_data>
-    </line>
-    <line direction="response" address="00" command="" crc="1:00">
-      <raw_frame>00   1: 00</raw_frame>
-      <raw_data />
-    </line>
-    <line direction="response" address="00" command="15" crc="1399">
-      <raw_frame>00 15 13 13 99</raw_frame>
-      <raw_data>13</raw_data>
+    <line direction="response" address="00" command="00" crc="1399">
+      <raw_frame>00 00 15 13 99</raw_frame>
+      <raw_data>15</raw_data>
     </line>
     <line direction="request" address="68" command="04:Read Input Registers" crc="78FD">
       <raw_frame>68 04 00 30 00 02 78 FD</raw_frame>
       <raw_data>00 30 00 02</raw_data>
     </line>
-    <line direction="response" address="68" command="" crc="1:68">
-      <raw_frame>68   1: 68</raw_frame>
-      <raw_data />
-    </line>
-    <line direction="response" address="04" command="04:Read Input Registers" crc="8594">
-      <raw_frame>04 04 0E 08 0F 10 85 94</raw_frame>
-      <raw_data>0E 08 0F 10</raw_data>
+    <line direction="response" address="68" command="04:Read Input Registers" crc="8594">
+      <raw_frame>68 04 04 0E 08 0F 10 85 94</raw_frame>
+      <raw_data>04 0E 08 0F 10</raw_data>
     </line>
   </source>
 </Data>
