@@ -18,8 +18,8 @@ namespace ParserMODBUS
 
             //Console.WriteLine(Parser.CRC16(bt, 3));
 
-            //raw_log = "raw_log_example.log";
-            //parsed_log = "test.xml";
+            raw_log = "raw_log_example2.log";
+            parsed_log = "test.xml";
             Parser parser = new Parser(raw_log);
             var extension = parsed_log.Substring(parsed_log.LastIndexOf('.') + 1);
             if (extension.Equals("xml"))
