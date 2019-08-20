@@ -206,3 +206,5 @@
 /Users/danilkorotaev/Desktop/Parser/Parser/ParserMODBUS/obj/x86/Debug/ParserMODBUS.csproj.CopyComplete
 /Users/danilkorotaev/Desktop/Parser/Parser/ParserMODBUS/obj/x86/Debug/ParserMODBUS.exe
 /Users/danilkorotaev/Desktop/Parser/Parser/ParserMODBUS/obj/x86/Debug/ParserMODBUS.pdb
+/Users/danilkorotaev/Desktop/Parser/Parser/ParserMODBUS/bin/Debug/Newtonsoft.Json.dll
+/Users/danilkorotaev/Desktop/Parser/Parser/ParserMODBUS/bin/Debug/Newtonsoft.Json.xml

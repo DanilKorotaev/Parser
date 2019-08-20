@@ -1,215 +1,45 @@
 <?xml version="1.0"?>
 <Data source_type="Com">
+  <source address="Serial0" speed="unknown">
+    <line direction="request" address="FE" command="46:Read EEPROM" crc="CA6C">
+      <raw_frame>FE 46 00 3B 01 CA 6C</raw_frame>
+      <raw_data>00 3B 01</raw_data>
+    </line>
+    <line direction="response" error="Timeout" />
+    <line direction="request" address="FE" command="46:Read EEPROM" crc="CA6C">
+      <raw_frame>FE 46 00 3B 01 CA 6C</raw_frame>
+      <raw_data>00 3B 01</raw_data>
+    </line>
+    <line direction="response" error="Timeout" />
+  </source>
   <source address="Serial3" speed="unknown">
-    <line direction="response" error="Timeout" />
-    <line direction="request" address="68" command="46:Read EEPROM" crc="514D">
-      <raw_frame>68 46 00 00 10 51 4D</raw_frame>
-      <raw_data>00 00 10</raw_data>
+    <line direction="request" address="68" command="46:Read EEPROM" crc="AE20">
+      <raw_frame>68 46 01 6A 02 AE 20</raw_frame>
+      <raw_data>01 6A 02</raw_data>
     </line>
-    <line direction="response" address="68" command="46:Read EEPROM" crc="C541">
-      <raw_frame>68 46 10 00 01 0E 08 0F 10 87 32 00 32 00 19 FF FF FF FF C5 41</raw_frame>
-      <raw_data>10 00 01 0E 08 0F 10 87 32 00 32 00 19 FF FF FF FF</raw_data>
+    <line direction="response" address="68" command="46:Read EEPROM" crc="71BC">
+      <raw_frame>68 46 02 03 12 71 BC</raw_frame>
+      <raw_data>02 03 12</raw_data>
     </line>
-    <line direction="response" error="Timeout" />
-    <line direction="response" error="Timeout" />
-    <line direction="request" address="68" command="46:Read EEPROM" crc="5C8D">
-      <raw_frame>68 46 00 10 10 5C 8D</raw_frame>
-      <raw_data>00 10 10</raw_data>
+    <line direction="request" address="68" command="04:Read Input Registers" crc="F93A">
+      <raw_frame>68 04 00 10 00 10 F9 3A</raw_frame>
+      <raw_data>00 10 00 10</raw_data>
     </line>
-    <line direction="response" address="68" command="46:Read EEPROM" crc="E0A5">
-      <raw_frame>68 46 10 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF E0 A5</raw_frame>
-      <raw_data>10 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF</raw_data>
+    <line direction="response" address="68" command="04:Read Input Registers" crc="1600">
+      <raw_frame>68 04 20 00 00 00 00 00 00 00 00 00 04 00 2E 00 2C 00 00 01 02 00 72 00 32 00 19 00 17 00 16 00</raw_frame>
+      <raw_data>20 00 00 00 00 00 00 00 00 00 04 00 2E 00 2C 00 00 01 02 00 72 00 32 00 19 00 17 00</raw_data>
     </line>
-    <line direction="response" error="Timeout" />
-    <line direction="response" error="Timeout" />
-    <line direction="request" address="68" command="46:Read EEPROM" crc="488D">
-      <raw_frame>68 46 00 20 10 48 8D</raw_frame>
-      <raw_data>00 20 10</raw_data>
+    <line direction="response" address="00" command="00" crc="1399">
+      <raw_frame>00 00 15 13 99</raw_frame>
+      <raw_data>15</raw_data>
     </line>
-    <line direction="response" address="68" command="46:Read EEPROM" crc="FFD6">
-      <raw_frame>68 46 10 FF A0 FF FF FF FF FF FF 0F 00 FF FF FF FF FF FF FF D6</raw_frame>
-      <raw_data>10 FF A0 FF FF FF FF FF FF 0F 00 FF FF FF FF FF FF</raw_data>
+    <line direction="request" address="68" command="04:Read Input Registers" crc="78FD">
+      <raw_frame>68 04 00 30 00 02 78 FD</raw_frame>
+      <raw_data>00 30 00 02</raw_data>
     </line>
-    <line direction="response" error="Timeout" />
-    <line direction="response" error="Timeout" />
-    <line direction="request" address="68" command="46:Read EEPROM" crc="454D">
-      <raw_frame>68 46 00 30 10 45 4D</raw_frame>
-      <raw_data>00 30 10</raw_data>
+    <line direction="response" address="68" command="04:Read Input Registers" crc="8594">
+      <raw_frame>68 04 04 0E 08 0F 10 85 94</raw_frame>
+      <raw_data>04 0E 08 0F 10</raw_data>
     </line>
-    <line direction="response" address="68" command="46:Read EEPROM" crc="A56C">
-      <raw_frame>68 46 10 FF FF FF FF FF FF FF FF FF FF FF 68 00 FF FF FF A5 6C</raw_frame>
-      <raw_data>10 FF FF FF FF FF FF FF FF FF FF FF 68 00 FF FF FF</raw_data>
-    </line>
-    <line direction="response" error="Timeout" />
-    <line direction="response" error="Timeout" />
-    <line direction="request" address="68" command="46:Read EEPROM" crc="608D">
-      <raw_frame>68 46 00 40 10 60 8D</raw_frame>
-      <raw_data>00 40 10</raw_data>
-    </line>
-    <line direction="response" address="68" command="46:Read EEPROM" crc="476D">
-      <raw_frame>68 46 10 FF FF 03 B3 03 08 08 F9 FF FF FF FF 00 0E FF FF 47 6D</raw_frame>
-      <raw_data>10 FF FF 03 B3 03 08 08 F9 FF FF FF FF 00 0E FF FF</raw_data>
-    </line>
-    <line direction="response" error="Timeout" />
-    <line direction="response" error="Timeout" />
-    <line direction="request" address="68" command="46:Read EEPROM" crc="6D4D">
-      <raw_frame>68 46 00 50 10 6D 4D</raw_frame>
-      <raw_data>00 50 10</raw_data>
-    </line>
-    <line direction="response" address="68" command="46:Read EEPROM" crc="A6DC">
-      <raw_frame>68 46 10 00 00 75 30 00 00 C3 50 00 0A 00 14 00 32 FF FF A6 DC</raw_frame>
-      <raw_data>10 00 00 75 30 00 00 C3 50 00 0A 00 14 00 32 FF FF</raw_data>
-    </line>
-    <line direction="response" error="Timeout" />
-    <line direction="response" error="Timeout" />
-    <line direction="request" address="68" command="46:Read EEPROM" crc="794D">
-      <raw_frame>68 46 00 60 10 79 4D</raw_frame>
-      <raw_data>00 60 10</raw_data>
-    </line>
-    <line direction="response" address="68" command="46:Read EEPROM" crc="9E1E">
-      <raw_frame>68 46 10 30 D4 FF FF FF FF FF FF FF FF FF FF FF FF FF FF 9E 1E</raw_frame>
-      <raw_data>10 30 D4 FF FF FF FF FF FF FF FF FF FF FF FF FF FF</raw_data>
-    </line>
-    <line direction="response" error="Timeout" />
-    <line direction="response" error="Timeout" />
-    <line direction="request" address="68" command="46:Read EEPROM" crc="748D">
-      <raw_frame>68 46 00 70 10 74 8D</raw_frame>
-      <raw_data>00 70 10</raw_data>
-    </line>
-    <line direction="response" address="68" command="46:Read EEPROM" crc="9E1E">
-      <raw_frame>68 46 10 30 D4 FF FF FF FF FF FF FF FF FF FF FF FF FF FF 9E 1E</raw_frame>
-      <raw_data>10 30 D4 FF FF FF FF FF FF FF FF FF FF FF FF FF FF</raw_data>
-    </line>
-    <line direction="response" error="Timeout" />
-    <line direction="response" error="Timeout" />
-    <line direction="request" address="68" command="46:Read EEPROM" crc="308D">
-      <raw_frame>68 46 00 80 10 30 8D</raw_frame>
-      <raw_data>00 80 10</raw_data>
-    </line>
-    <line direction="response" address="68" command="46:Read EEPROM" crc="9E1E">
-      <raw_frame>68 46 10 30 D4 FF FF FF FF FF FF FF FF FF FF FF FF FF FF 9E 1E</raw_frame>
-      <raw_data>10 30 D4 FF FF FF FF FF FF FF FF FF FF FF FF FF FF</raw_data>
-    </line>
-    <line direction="response" error="Timeout" />
-    <line direction="response" error="Timeout" />
-    <line direction="request" address="68" command="46:Read EEPROM" crc="3D4D">
-      <raw_frame>68 46 00 90 10 3D 4D</raw_frame>
-      <raw_data>00 90 10</raw_data>
-    </line>
-    <line direction="response" address="68" command="46:Read EEPROM" crc="9E1E">
-      <raw_frame>68 46 10 30 D4 FF FF FF FF FF FF FF FF FF FF FF FF FF FF 9E 1E</raw_frame>
-      <raw_data>10 30 D4 FF FF FF FF FF FF FF FF FF FF FF FF FF FF</raw_data>
-    </line>
-    <line direction="response" error="Timeout" />
-    <line direction="response" error="Timeout" />
-    <line direction="request" address="68" command="46:Read EEPROM" crc="294D">
-      <raw_frame>68 46 00 A0 10 29 4D</raw_frame>
-      <raw_data>00 A0 10</raw_data>
-    </line>
-    <line direction="response" address="68" command="46:Read EEPROM" crc="5E55">
-      <raw_frame>68 46 10 00 00 FF FF FF FF FF FF FF FF FF FF FF FF FF FF 5E 55</raw_frame>
-      <raw_data>10 00 00 FF FF FF FF FF FF FF FF FF FF FF FF FF FF</raw_data>
-    </line>
-    <line direction="response" error="Timeout" />
-    <line direction="response" error="Timeout" />
-    <line direction="request" address="68" command="46:Read EEPROM" crc="248D">
-      <raw_frame>68 46 00 B0 10 24 8D</raw_frame>
-      <raw_data>00 B0 10</raw_data>
-    </line>
-    <line direction="response" address="68" command="46:Read EEPROM" crc="5E55">
-      <raw_frame>68 46 10 00 00 FF FF FF FF FF FF FF FF FF FF FF FF FF FF 5E 55</raw_frame>
-      <raw_data>10 00 00 FF FF FF FF FF FF FF FF FF FF FF FF FF FF</raw_data>
-    </line>
-    <line direction="response" error="Timeout" />
-    <line direction="response" error="Timeout" />
-    <line direction="request" address="68" command="46:Read EEPROM" crc="014D">
-      <raw_frame>68 46 00 C0 10 01 4D</raw_frame>
-      <raw_data>00 C0 10</raw_data>
-    </line>
-    <line direction="response" address="68" command="46:Read EEPROM" crc="5E55">
-      <raw_frame>68 46 10 00 00 FF FF FF FF FF FF FF FF FF FF FF FF FF FF 5E 55</raw_frame>
-      <raw_data>10 00 00 FF FF FF FF FF FF FF FF FF FF FF FF FF FF</raw_data>
-    </line>
-    <line direction="response" error="Timeout" />
-    <line direction="response" error="Timeout" />
-    <line direction="request" address="68" command="46:Read EEPROM" crc="0C8D">
-      <raw_frame>68 46 00 D0 10 0C 8D</raw_frame>
-      <raw_data>00 D0 10</raw_data>
-    </line>
-    <line direction="response" address="68" command="46:Read EEPROM" crc="5E55">
-      <raw_frame>68 46 10 00 00 FF FF FF FF FF FF FF FF FF FF FF FF FF FF 5E 55</raw_frame>
-      <raw_data>10 00 00 FF FF FF FF FF FF FF FF FF FF FF FF FF FF</raw_data>
-    </line>
-    <line direction="response" error="Timeout" />
-    <line direction="response" error="Timeout" />
-    <line direction="request" address="68" command="46:Read EEPROM" crc="188D">
-      <raw_frame>68 46 00 E0 10 18 8D</raw_frame>
-      <raw_data>00 E0 10</raw_data>
-    </line>
-    <line direction="response" address="68" command="46:Read EEPROM" crc="F554">
-      <raw_frame>68 46 10 00 00 00 00 FF FF FF FF FF FF FF FF FF FF FF FF F5 54</raw_frame>
-      <raw_data>10 00 00 00 00 FF FF FF FF FF FF FF FF FF FF FF FF</raw_data>
-    </line>
-    <line direction="response" error="Timeout" />
-    <line direction="response" error="Timeout" />
-    <line direction="request" address="68" command="46:Read EEPROM" crc="154D">
-      <raw_frame>68 46 00 F0 10 15 4D</raw_frame>
-      <raw_data>00 F0 10</raw_data>
-    </line>
-    <line direction="response" address="68" command="46:Read EEPROM" crc="E0A5">
-      <raw_frame>68 46 10 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF E0 A5</raw_frame>
-      <raw_data>10 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF</raw_data>
-    </line>
-    <line direction="response" error="Timeout" />
-    <line direction="response" error="Timeout" />
-    <line direction="request" address="68" command="04:Read Input Registers" crc="D8F7">
-      <raw_frame>68 04 00 1E 00 07 D8 F7</raw_frame>
-      <raw_data>00 1E 00 07</raw_data>
-    </line>
-    <line direction="response" address="68" command="04:Read Input Registers" crc="3C07">
-      <raw_frame>68 04 0E 00 00 00 1D 00 00 00 00 00 00 00 00 00 00 3C 07</raw_frame>
-      <raw_data>0E 00 00 00 1D 00 00 00 00 00 00 00 00 00 00</raw_data>
-    </line>
-    <line direction="response" error="Timeout" />
-    <line direction="response" error="Timeout" />
-    <line direction="request" address="68" command="04:Read Input Registers" crc="C8F9">
-      <raw_frame>68 04 00 27 00 02 C8 F9</raw_frame>
-      <raw_data>00 27 00 02</raw_data>
-    </line>
-    <line direction="response" address="68" command="04:Read Input Registers" crc="8349">
-      <raw_frame>68 04 04 00 00 00 1A 83 49</raw_frame>
-      <raw_data>04 00 00 00 1A</raw_data>
-    </line>
-    <line direction="response" error="Timeout" />
-    <line direction="response" error="Timeout" />
-    <line direction="request" address="68" command="04:Read Input Registers" crc="08FA">
-      <raw_frame>68 04 00 2B 00 02 08 FA</raw_frame>
-      <raw_data>00 2B 00 02</raw_data>
-    </line>
-    <line direction="response" address="68" command="04:Read Input Registers" crc="B289">
-      <raw_frame>68 04 04 00 03 00 1B B2 89</raw_frame>
-      <raw_data>04 00 03 00 1B</raw_data>
-    </line>
-    <line direction="response" error="Timeout" />
-    <line direction="response" error="Timeout" />
-    <line direction="request" address="68" command="04:Read Input Registers" crc="093A">
-      <raw_frame>68 04 00 2F 00 01 09 3A</raw_frame>
-      <raw_data>00 2F 00 01</raw_data>
-    </line>
-    <line direction="response" address="68" command="04:Read Input Registers" crc="64F8">
-      <raw_frame>68 04 02 00 02 64 F8</raw_frame>
-      <raw_data>02 00 02</raw_data>
-    </line>
-    <line direction="response" error="Timeout" />
-    <line direction="response" error="Timeout" />
-    <line direction="request" address="68" command="03:Read Holding Registers" crc="6CF2">
-      <raw_frame>68 03 00 02 00 02 6C F2</raw_frame>
-      <raw_data>00 02 00 02</raw_data>
-    </line>
-    <line direction="response" address="68" command="03:Read Holding Registers" crc="B766">
-      <raw_frame>68 03 04 54 09 4F C3 B7 66</raw_frame>
-      <raw_data>04 54 09 4F C3</raw_data>
-    </line>
-    <line direction="response" error="Timeout" />
   </source>
 </Data>

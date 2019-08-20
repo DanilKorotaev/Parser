@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization;
+using System.Runtime.Serialization.Json;
+using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
+using Newtonsoft.Json;
 
 namespace ParserMODBUS
 {
@@ -15,28 +19,44 @@ namespace ParserMODBUS
         public static string fileCommands = "commands.vcb";
         [XmlIgnore]
         public static Dictionary<string, string> commands;
+        [XmlIgnore]
+        public static string fileException = "exception.vcb";
+        [XmlIgnore]
+        public static Dictionary<string, string> exceptions;
         [XmlAttribute]
+        [DataMember(EmitDefaultValue = false)]
         public string direction;
         [XmlAttribute]
+        [DataMember(EmitDefaultValue = false)]
         public string address;
         [XmlAttribute]
+        [DataMember(EmitDefaultValue = false)]
         public string command;
         [XmlAttribute]
+        [DataMember(EmitDefaultValue = false)]
         public string crc;
         [XmlAttribute]
+        [DataMember(EmitDefaultValue = false)]
+        public string exception;
+        [XmlAttribute]
+        [DataMember(EmitDefaultValue = false)]
         public string error;
+        [DataMember(EmitDefaultValue = false)]
         public string raw_frame;
+        [DataMember(EmitDefaultValue = false)]
         public string raw_data;
+
         public void Set( string _error)
         {
             error = _error;
         }
+
         public void Set(string _address, string _command, string _crc, string _raw_data)
         {
             if (commands == null)
             {
                 commands = new Dictionary<string, string>();
-                using (StreamReader sr = new StreamReader(fileCommands, System.Text.Encoding.Default))
+                using (StreamReader sr = new StreamReader(fileCommands, Encoding.Default))
                 {
                     string line;
                     while ((line = sr.ReadLine()) != null)
@@ -47,6 +67,31 @@ namespace ParserMODBUS
                     }
                 }
             }
+
+            if (exceptions == null)
+            {
+                exceptions = new Dictionary<string, string>();
+                using (StreamReader sr = new StreamReader(fileCommands, Encoding.Default))
+                {
+                    string line;
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        var spltline = line.Replace("-", "").Split(' ');
+                        exceptions.Add(spltline[0], line.Substring(spltline[0].Length + 3));
+                    }
+                }
+            }
+
+            if(_raw_data.Length == 2)
+            if (exceptions.ContainsKey(_raw_data))
+            {
+                exception = $"{_raw_data}:{exceptions[_raw_data]}";
+            }
+            else
+            {
+                exception = _raw_data;
+            }
+
             address = _address;
             if (commands.ContainsKey(_command))
             {
@@ -57,6 +102,20 @@ namespace ParserMODBUS
                 command = _command;
             }
             crc = _crc.Replace(" ", "");
+
+            var spltStr = $"{address} {_command} {raw_data}".Split(' ');
+            byte[] bt = new byte[spltStr.Length];
+            int count = 0;
+            foreach (var b in spltStr)
+            {
+                bt[count++] = Convert.ToByte(b, 16);
+            }
+
+            if (Parser.CRC16(bt, bt.Length) != Convert.ToUInt32(crc, 16))
+            {
+                error = "Wrong CRC";
+            }
+
             raw_data = _raw_data;
             raw_frame = $"{address} {_command} {raw_data} {_crc}";
         }
@@ -68,22 +127,24 @@ namespace ParserMODBUS
     }
 
     [Serializable]
+    [DataContract]
     public class Source
     {
-        [XmlAttribute]
+        [XmlAttribute][DataMember]
         public string address;
-        [XmlAttribute]
+        [XmlAttribute][DataMember]
         public string speed = "unknown";
-        [XmlElement("line")]
+        [XmlElement("line")][DataMember(Name = "Line")]
         public List<Line> lines = new List<Line>();
     }
 
     [Serializable]
+    [DataContract]
     public class Data
     {
-        [XmlAttribute]
+        [XmlAttribute][DataMember(Name = "SourceType")]
         public string source_type = "Com";
-        [XmlElement("source")]
+        [XmlElement("source")][DataMember(Name = "Source")] 
         public List<Source> m_logs = new List<Source>();
     }
 
@@ -181,51 +242,132 @@ namespace ParserMODBUS
 
         public void ToJSON(string fileName)
         {
-            using (StreamWriter sw = new StreamWriter(fileName, false, System.Text.Encoding.Default))
+            //using (StreamWriter sw = new StreamWriter(fileName, false, System.Text.Encoding.Default))
+            //{
+            //    sw.WriteLine("{");
+            //    sw.WriteLine($"\t\"SourceType\": \"{m_data.source_type}\",\n");
+            //    foreach (var source in m_data.m_logs)
+            //    {
+            //        sw.WriteLine("\t\"Source\": {\n" +
+            //                    $"\t\t\"address\": \"{source.address}\",\n" +
+            //                    $"\t\t\"speed\": \"{source.speed}\"\n" +
+            //                    "\t\t\"Line\": [");
+
+            //        foreach (var line in source.lines)
+            //        {
+            //            sw.Write($"\t\t\t{{\n\t\t\t\t\"Direction\": \"{line.direction}\"," +
+            //                $"\n\t\t\t\t");
+            //            if (line.error == null)
+            //            {
+            //                var frames = line.raw_frame.Split(' ');
+            //                string raw_frame = "0x" + frames[0];
+            //                for(int i = 1; i < frames.Length; ++i)
+            //                { 
+            //                    raw_frame += ", 0x" + frames[i];
+            //                }
+            //                var data = line.raw_data.Split(' ');
+            //                string raw_data = "0x" + data[0];
+            //                for (int i = 1; i < data.Length; ++i)
+            //                {
+            //                    raw_data += ", 0x" + data[i];
+            //                }
+
+            //                sw.WriteLine($"\"Address\": \"{line.address}\",\n" +
+            //                    $"\t\t\t\t\"Command\": \"{line.command}\",\n" +
+            //                    $"\t\t\t\t\"CRC\": \"{line.crc}\",\n");
+            //                sw.WriteLine($"\t\t\t\t\"RawFrame\": [ {raw_frame}],\n\t\t\t\t\"RawData\": [ {raw_data}]");
+            //            }
+            //            else
+            //            {
+            //                sw.WriteLine($"\"Error\": \"{line.error}\"");
+            //            }
+            //            sw.WriteLine("\t\t\t},");
+            //        }
+            //        sw.WriteLine("\t\t]");
+            //        sw.WriteLine("\t}\n}");
+            //    }
+            //}
+            using (StreamWriter sw = new StreamWriter(fileName))
             {
-                sw.WriteLine("{");
-                sw.WriteLine($"\t\"SourceType\": \"{m_data.source_type}\",\n");
-                foreach (var source in m_data.m_logs)
+                sw.Write((JsonConvert.SerializeObject(m_data, Newtonsoft.Json.Formatting.Indented)));
+            }
+
+            //DataContractJsonSerializer jsonFormatter = new DataContractJsonSerializer(m_data.GetType());
+            
+            //using (FileStream fs = new FileStream(fileName, FileMode.Create))
+            //{
+            //    jsonFormatter.WriteObject(fs, m_data);
+            //}
+            //string str;
+            //using()
+            //var str = FormatJson(new StreamReader(fileName).ReadToEnd());
+
+            //using (StreamReader sr = new StreamReader(fileName))
+            //{
+            //   new StreamWriter(fileName).Write(str);
+            //}
+
+        }
+
+        public static string FormatJson(string str, string indentString = "\t")
+        {
+            var indent = 0;
+            var quoted = false;
+            var sb = new StringBuilder();
+            for (var i = 0; i < str.Length; i++)
+            {
+                var ch = str[i];
+                switch (ch)
                 {
-                    sw.WriteLine("\t\"Source\": {\n" +
-                                $"\t\t\"address\": \"{source.address}\",\n" +
-                                $"\t\t\"speed\": \"{source.speed}\"\n" +
-                                "\t\t\"Line\": [");
-
-                    foreach (var line in source.lines)
-                    {
-                        sw.Write($"\t\t\t{{\n\t\t\t\t\"Direction\": \"{line.direction}\"," +
-                            $"\n\t\t\t\t");
-                        if (line.error == null)
+                    case '{':
+                    case '[':
+                        sb.Append(ch);
+                        if (!quoted)
                         {
-                            var frames = line.raw_frame.Split(' ');
-                            string raw_frame = "0x" + frames[0];
-                            for(int i = 1; i < frames.Length; ++i)
-                            { 
-                                raw_frame += ", 0x" + frames[i];
-                            }
-                            var data = line.raw_data.Split(' ');
-                            string raw_data = "0x" + data[0];
-                            for (int i = 1; i < data.Length; ++i)
-                            {
-                                raw_data += ", 0x" + data[i];
-                            }
-
-                            sw.WriteLine($"\"Address\": \"{line.address}\",\n" +
-                                $"\t\t\t\t\"Command\": \"{line.command}\",\n" +
-                                $"\t\t\t\t\"CRC\": \"{line.crc}\",\n");
-                            sw.WriteLine($"\t\t\t\t\"RawFrame\": [ {raw_frame}],\n\t\t\t\t\"RawData\": [ {raw_data}]");
+                            sb.AppendLine();
+                            foreach (var e in Enumerable.Range(0, ++indent))
+                                sb.Append(indentString);
                         }
-                        else
+                        break;
+                    case '}':
+                    case ']':
+                        if (!quoted)
                         {
-                            sw.WriteLine($"\"Error\": \"{line.error}\"");
+                            sb.AppendLine();
+                            foreach (var e in Enumerable.Range(0, --indent))
+                                sb.Append(indentString);
                         }
-                        sw.WriteLine("\t\t\t},");
-                    }
-                    sw.WriteLine("\t\t]");
-                    sw.WriteLine("\t}\n}");
+                        sb.Append(ch);
+                        break;
+                    case '"':
+                        sb.Append(ch);
+                        bool escaped = false;
+                        var index = i;
+                        while (index > 0 && str[--index] == '\\')
+                            escaped = !escaped;
+                        if (!escaped)
+                            quoted = !quoted;
+                        break;
+                    case ',':
+                        sb.Append(ch);
+                        if (!quoted)
+                        {
+                            sb.AppendLine();
+                            foreach (var e in Enumerable.Range(0, indent))
+                                sb.Append(indentString);
+                        }
+                        break;
+                    case ':':
+                        sb.Append(ch);
+                        if (!quoted)
+                            sb.Append(" ");
+                        break;
+                    default:
+                        sb.Append(ch);
+                        break;
                 }
             }
+            return sb.ToString();
         }
 
         public void ToXML(string fileName)
@@ -241,7 +383,7 @@ namespace ParserMODBUS
 
         public void ToTxt(string fileName)
         {
-            using (StreamWriter sw = new StreamWriter(fileName, false, System.Text.Encoding.Default))
+            using (StreamWriter sw = new StreamWriter(fileName, false, Encoding.Default))
             {              
                 sw.WriteLine($"SourceType {m_data.source_type}");
                 foreach(var source in m_data.m_logs)

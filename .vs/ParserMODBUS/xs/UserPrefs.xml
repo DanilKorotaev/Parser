@@ -1,8 +1,8 @@
 ﻿<Properties StartupConfiguration="{17AD8F80-9A3D-40F0-8E4C-1A05BD7303A4}|Default">
   <MonoDevelop.Ide.Workbench ActiveDocument="ParserMODBUS/Parser.cs">
     <Files>
-      <File FileName="ParserMODBUS/Parser.cs" Line="110" Column="1" />
-      <File FileName="ParserMODBUS/Program.cs" Line="18" Column="37" />
+      <File FileName="ParserMODBUS/Parser.cs" Line="257" Column="1" />
+      <File FileName="ParserMODBUS/Program.cs" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
