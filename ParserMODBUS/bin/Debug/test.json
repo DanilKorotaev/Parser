@@ -7,11 +7,11 @@
       "Line": [
         {
           "direction": "request",
-          "address": "FE",
-          "command": "46:Read EEPROM",
-          "crc": "CA6C",
-          "raw_frame": "FE 46 00 3B 01 CA 6C",
-          "raw_data": "00 3B 01"
+          "address": "68",
+          "command": "03:Read Holding Registers",
+          "crc": "83EC",
+          "raw_frame": "68 03 00 02 FF FF 83 EC",
+          "raw_data": "00 02 FF FF"
         },
         {
           "direction": "response",
@@ -19,11 +19,12 @@
         },
         {
           "direction": "request",
-          "address": "FE",
-          "command": "46:Read EEPROM",
-          "crc": "CA6C",
-          "raw_frame": "FE 46 00 3B 01 CA 6C",
-          "raw_data": "00 3B 01"
+          "address": "68",
+          "command": "03:Read Holding Registers",
+          "crc": "83EC",
+          "error": "Wrong CRC",
+          "raw_frame": "68 03 00 FF FF FF 02 FF FF 83 EC",
+          "raw_data": "00 FF FF FF 02 FF FF"
         },
         {
           "direction": "response",
@@ -39,8 +40,8 @@
           "direction": "request",
           "address": "68",
           "command": "46:Read EEPROM",
-          "crc": "AE20",
-          "raw_frame": "68 46 01 6A 02 AE 20",
+          "crc": "20AE",
+          "raw_frame": "68 46 01 6A 02 20 AE",
           "raw_data": "01 6A 02"
         },
         {
@@ -48,6 +49,7 @@
           "address": "68",
           "command": "46:Read EEPROM",
           "crc": "71BC",
+          "error": "Wrong CRC",
           "raw_frame": "68 46 02 03 12 71 BC",
           "raw_data": "02 03 12"
         },
@@ -56,6 +58,7 @@
           "address": "68",
           "command": "04:Read Input Registers",
           "crc": "F93A",
+          "error": "Wrong CRC",
           "raw_frame": "68 04 00 10 00 10 F9 3A",
           "raw_data": "00 10 00 10"
         },
@@ -64,6 +67,7 @@
           "address": "68",
           "command": "04:Read Input Registers",
           "crc": "1600",
+          "error": "Wrong CRC",
           "raw_frame": "68 04 20 00 00 00 00 00 00 00 00 00 04 00 2E 00 2C 00 00 01 02 00 72 00 32 00 19 00 17 00 16 00",
           "raw_data": "20 00 00 00 00 00 00 00 00 00 04 00 2E 00 2C 00 00 01 02 00 72 00 32 00 19 00 17 00"
         },
@@ -72,4 +76,30 @@
           "address": "00",
           "command": "00",
           "crc": "1399",
-          "raw_fr
+          "exception": "15",
+          "error": "Wrong CRC",
+          "raw_frame": "00 00 15 13 99",
+          "raw_data": "15"
+        },
+        {
+          "direction": "request",
+          "address": "68",
+          "command": "04:Read Input Registers",
+          "crc": "78FD",
+          "error": "Wrong CRC",
+          "raw_frame": "68 04 00 30 00 02 78 FD",
+          "raw_data": "00 30 00 02"
+        },
+        {
+          "direction": "response",
+          "address": "68",
+          "command": "04:Read Input Registers",
+          "crc": "8594",
+          "error": "Wrong CRC",
+          "raw_frame": "68 04 04 0E 08 0F 10 85 94",
+          "raw_data": "04 0E 08 0F 10"
+        }
+      ]
+    }
+  ]
+}

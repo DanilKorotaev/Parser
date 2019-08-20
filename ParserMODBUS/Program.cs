@@ -14,10 +14,10 @@ namespace ParserMODBUS
             string raw_log = args[0];
             string parsed_log = args[1];
 
-            raw_log = "raw_log_example.log";
-            parsed_log = "test.json";
+            //raw_log = "raw_log_example.log";
+            //parsed_log = "test.json";
 
-            //string str = "68 03 00 02 FF FF";
+            //string str = "68 46 01 6A 02";
             //var spltStr = str.Split(' ');
             //byte[] bt = new byte[spltStr.Length];
             //int count = 0;
@@ -26,24 +26,22 @@ namespace ParserMODBUS
             //    bt[count++] = Convert.ToByte(b, 16);
             //}
 
-            
-
-            //Console.WriteLine(Parser.CRC16(bt, bt.Length) == Convert.ToUInt32("83EC",16));
-
-            //Parser parser = new Parser(raw_log);
-            //var extension = parsed_log.Substring(parsed_log.LastIndexOf('.') + 1);
-            //if (extension.Equals("xml"))
-            //{
-            //    parser.ToXML(parsed_log);
-            //}
-            //if (extension.Equals("json"))
-            //{
-            //    parser.ToJSON(parsed_log);
-            //}
-            //if (extension.Equals("txt"))
-            //{
-            //    parser.ToTxt(parsed_log);
-            //}
+            //Console.WriteLine(Parser.CRC16(bt, bt.Length) == Convert.ToUInt32("8594", 16));
+            //Console.WriteLine(Parser.CRC16(bt, bt.Length));
+            Parser parser = new Parser(raw_log);
+            var extension = parsed_log.Substring(parsed_log.LastIndexOf('.') + 1);
+            if (extension.Equals("xml"))
+            {
+                parser.ToXML(parsed_log);
+            }
+            if (extension.Equals("json"))
+            {
+                parser.ToJSON(parsed_log);
+            }
+            if (extension.Equals("txt"))
+            {
+                parser.ToTxt(parsed_log);
+            }
             return 0;
         }
     }
