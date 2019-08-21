@@ -101,6 +101,8 @@ namespace ParserMODBUS
             }
             crc = _crc.Replace(" ", "");
 
+            string reveres_crc = _crc.Split(' ')[1] + _crc.Split(' ')[0];
+
             var spltStr = $"{_address} {_command} {_raw_data}".Split(' ');
             byte[] bt = new byte[spltStr.Length];
             int count = 0;
@@ -109,7 +111,7 @@ namespace ParserMODBUS
                 bt[count++] = Convert.ToByte(b, 16);
             }
 
-            if (Parser.CRC16(bt, bt.Length) != Convert.ToUInt32(crc, 16))
+            if (Parser.CRC16(bt, bt.Length) != Convert.ToUInt32(reveres_crc, 16))
             {
                 error = "Wrong CRC";
             }

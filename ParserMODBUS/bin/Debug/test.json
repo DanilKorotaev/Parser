@@ -10,6 +10,7 @@
           "address": "68",
           "command": "03:Read Holding Registers",
           "crc": "83EC",
+          "error": "Wrong CRC",
           "raw_frame": "68 03 00 02 FF FF 83 EC",
           "raw_data": "00 02 FF FF"
         },
@@ -41,6 +42,7 @@
           "address": "68",
           "command": "46:Read EEPROM",
           "crc": "20AE",
+          "error": "Wrong CRC",
           "raw_frame": "68 46 01 6A 02 20 AE",
           "raw_data": "01 6A 02"
         },
@@ -49,7 +51,6 @@
           "address": "68",
           "command": "46:Read EEPROM",
           "crc": "71BC",
-          "error": "Wrong CRC",
           "raw_frame": "68 46 02 03 12 71 BC",
           "raw_data": "02 03 12"
         },
@@ -58,7 +59,6 @@
           "address": "68",
           "command": "04:Read Input Registers",
           "crc": "F93A",
-          "error": "Wrong CRC",
           "raw_frame": "68 04 00 10 00 10 F9 3A",
           "raw_data": "00 10 00 10"
         },
@@ -86,7 +86,6 @@
           "address": "68",
           "command": "04:Read Input Registers",
           "crc": "78FD",
-          "error": "Wrong CRC",
           "raw_frame": "68 04 00 30 00 02 78 FD",
           "raw_data": "00 30 00 02"
         },
@@ -95,7 +94,6 @@
           "address": "68",
           "command": "04:Read Input Registers",
           "crc": "8594",
-          "error": "Wrong CRC",
           "raw_frame": "68 04 04 0E 08 0F 10 85 94",
           "raw_data": "04 0E 08 0F 10"
         }
