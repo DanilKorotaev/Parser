@@ -14,8 +14,8 @@ namespace ParserMODBUS
             string raw_log = args[0];
             string parsed_log = args[1];
 
-            //raw_log = "raw_log_example.log";
-            //parsed_log = "test.json";
+            raw_log = "raw_log_example.log";
+            parsed_log = "test.txt";
 
             //string str = "68 46 01 6A 02";
             //var spltStr = str.Split(' ');

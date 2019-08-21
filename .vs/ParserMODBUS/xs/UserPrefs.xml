@@ -1,9 +1,8 @@
 ﻿<Properties StartupConfiguration="{17AD8F80-9A3D-40F0-8E4C-1A05BD7303A4}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="../../../../../Library/Frameworks/Mono.framework/Versions/6.0.0/lib/mono/msbuild/Current/bin/Microsoft.Common.CurrentVersion.targets">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ParserMODBUS/Program.cs">
     <Files>
       <File FileName="ParserMODBUS/Parser.cs" Line="104" Column="72" />
       <File FileName="ParserMODBUS/Program.cs" Line="18" Column="40" />
-      <File FileName="../../../../../Library/Frameworks/Mono.framework/Versions/6.0.0/lib/mono/msbuild/Current/bin/Microsoft.Common.CurrentVersion.targets" Line="2126" Column="5" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">

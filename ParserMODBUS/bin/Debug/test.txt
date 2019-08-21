@@ -1,0 +1,32 @@
+SourceType Com
+	Source: Address=Serial0 Speed=unknown
+		Line: Direction=request Address=68 Command='03:Read Holding Registers' Error='Wrong CRC' CRC =83EC
+			RawFrame: 68 03 00 02 FF FF 83 EC
+			RawData: 00 02 FF FF
+		Line: Direction=response Error='Timeout'
+		Line: Direction=request Address=68 Command='03:Read Holding Registers' Error='Wrong CRC' CRC =83EC
+			RawFrame: 68 03 00 FF FF FF 02 FF FF 83 EC
+			RawData: 00 FF FF FF 02 FF FF
+		Line: Direction=response Error='Timeout'
+	Source: Address=Serial3 Speed=unknown
+		Line: Direction=request Address=68 Command='46:Read EEPROM' Error='Wrong CRC' CRC =20AE
+			RawFrame: 68 46 01 6A 02 20 AE
+			RawData: 01 6A 02
+		Line: Direction=response Address=68 Command='46:Read EEPROM' CRC =71BC
+			RawFrame: 68 46 02 03 12 71 BC
+			RawData: 02 03 12
+		Line: Direction=request Address=68 Command='04:Read Input Registers' CRC =F93A
+			RawFrame: 68 04 00 10 00 10 F9 3A
+			RawData: 00 10 00 10
+		Line: Direction=response Address=68 Command='04:Read Input Registers' Error='Wrong CRC' CRC =1600
+			RawFrame: 68 04 20 00 00 00 00 00 00 00 00 00 04 00 2E 00 2C 00 00 01 02 00 72 00 32 00 19 00 17 00 16 00
+			RawData: 20 00 00 00 00 00 00 00 00 00 04 00 2E 00 2C 00 00 01 02 00 72 00 32 00 19 00 17 00
+		Line: Direction=response Address=00 Command='00' Exception='15' Error='Wrong CRC' CRC =1399
+			RawFrame: 00 00 15 13 99
+			RawData: 15
+		Line: Direction=request Address=68 Command='04:Read Input Registers' CRC =78FD
+			RawFrame: 68 04 00 30 00 02 78 FD
+			RawData: 00 30 00 02
+		Line: Direction=response Address=68 Command='04:Read Input Registers' CRC =8594
+			RawFrame: 68 04 04 0E 08 0F 10 85 94
+			RawData: 04 0E 08 0F 10

@@ -269,16 +269,23 @@ namespace ParserMODBUS
                     sw.WriteLine($"\tSource: Address={source.address} Speed={source.speed}");
                     foreach(var line in source.lines)
                     {
-                        sw.Write($"\t\tLine: Direction={line.direction} "); 
-                        if (line.error == null)
+                        sw.Write($"\t\tLine: Direction={line.direction} ");
+                        if(line.address==null && line.error != null)
                         {
-                            sw.WriteLine($"Address={line.address} Command='{line.command}' CRC={line.crc}");
-                            sw.WriteLine($"\t\t\tRawFrame: {line.raw_frame}\n\t\t\tRawData: {line.raw_data}");
+                            sw.WriteLine($"Error='{line.error}'");
+                            continue;
                         }
-                        else
+                        sw.Write($"Address={line.address} Command='{line.command}' ");
+                        if(line.exception != null)
                         {
-                            sw.WriteLine($"Error={line.error}");
+                            sw.Write($"Exception='{line.exception}' ");
                         }
+                        if(line.error != null)
+                        {
+                            sw.Write($"Error='{line.error}' ");
+                        }
+                        sw.WriteLine($"CRC ={line.crc}");
+                        sw.WriteLine($"\t\t\tRawFrame: {line.raw_frame}\n\t\t\tRawData: {line.raw_data}");
                     }
                 }
             }
