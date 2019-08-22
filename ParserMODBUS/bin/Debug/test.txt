@@ -18,12 +18,9 @@ SourceType Com
 		Line: Direction=request Address=68 Command='04:Read Input Registers' CRC =F93A
 			RawFrame: 68 04 00 10 00 10 F9 3A
 			RawData: 00 10 00 10
-		Line: Direction=response Address=68 Command='04:Read Input Registers' Error='Wrong CRC' CRC =1600
-			RawFrame: 68 04 20 00 00 00 00 00 00 00 00 00 04 00 2E 00 2C 00 00 01 02 00 72 00 32 00 19 00 17 00 16 00
-			RawData: 20 00 00 00 00 00 00 00 00 00 04 00 2E 00 2C 00 00 01 02 00 72 00 32 00 19 00 17 00
-		Line: Direction=response Address=00 Command='00' Exception='15' Error='Wrong CRC' CRC =1399
-			RawFrame: 00 00 15 13 99
-			RawData: 15
+		Line: Direction=response Address=68 Command='04:Read Input Registers' CRC =1399
+			RawFrame: 68 04 20 00 00 00 00 00 00 00 00 00 04 00 2E 00 2C 00 00 01 02 00 72 00 32 00 19 00 17 00 16 00 00 00 15 13 99
+			RawData: 20 00 00 00 00 00 00 00 00 00 04 00 2E 00 2C 00 00 01 02 00 72 00 32 00 19 00 17 00 16 00 00 00 15
 		Line: Direction=request Address=68 Command='04:Read Input Registers' CRC =78FD
 			RawFrame: 68 04 00 30 00 02 78 FD
 			RawData: 00 30 00 02

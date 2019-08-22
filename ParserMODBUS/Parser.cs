@@ -49,6 +49,18 @@ namespace ParserMODBUS
             error = _error;
         }
 
+        public void SetAll(string fullData)
+        {
+            var splitData = fullData.Split(' ');
+
+            string _addr = splitData[0];
+            string _comm = splitData[1];
+            string _crc = splitData[splitData.Length - 2] + ' ' + splitData[splitData.Length - 1];
+
+            string _raw_data = fullData.Substring(6, fullData.Length - 12);
+            Set(_addr, _comm, _crc, _raw_data);
+        }
+
         public void Set(string _address, string _command, string _crc, string _raw_data)
         {
             if (commands == null)
@@ -157,86 +169,210 @@ namespace ParserMODBUS
             FileToLogs(fileName);
         }
 
+        private int AddLine(string address, string direction, bool separate = false)
+        {           
+            int idx = m_data.m_logs.FindIndex(x => x.address == address);
+            if (idx == -1)
+            {
+                m_data.m_logs.Add(new Source()
+                { address = address });
+                idx = m_data.m_logs.Count - 1;
+            }
+            if (!separate)
+            {
+                m_data.m_logs[idx].lines.Add(new Line() { direction = direction });
+            }
+            return idx;
+        }
+
         private void FileToLogs(string fileName)
         {
             StreamReader file = new StreamReader(fileName);
             string line;
             m_data = new Data();
-            bool separate = false;
+            List<string> lines = new List<string>();
+
             while ((line = file.ReadLine()) != null)
             {
-                line = line.Replace('\t', ' ');
-                var splitLine = line.Split(' ');
+                lines.Add(line);
+            }
 
-                int idx = 0;
+            int countPacketSeparate = 0;
 
-                for (int i = 0; i < splitLine.Length; i++)
+            for(int i = 0; i < lines.Count;)
+            {
+                for (int j = i; j < lines.Count; ++j)
                 {
-                    if (splitLine[i] == "IRP_MJ_WRITE")
+                    if (lines[j].Contains("IRP_MJ_READ") && !lines[j].Contains("TIMEOUT"))
                     {
-                        string address = splitLine[i + 1];
-                        idx = m_data.m_logs.FindIndex(x => x.address == address);
-                        if (idx == -1 )
-                        {
-                            m_data.m_logs.Add(new Source()
-                            { address = address });
-                            idx = m_data.m_logs.Count - 1;
-                        }
-                        if (!separate)
-                        {
-                            m_data.m_logs[idx].lines.Add(new Line() { direction = "request" });
-                        }
+                        countPacketSeparate++;
                     }
-                    if (splitLine[i] == "IRP_MJ_READ")
+                    else
                     {
-                        string address = splitLine[i + 1];
-                        idx = m_data.m_logs.FindIndex(x => x.address == address);
-                        if (idx == -1)
-                        {
-                            m_data.m_logs.Add(new Source()
-                            { address = address });
-                            idx = m_data.m_logs.Count - 1;
-                        }
-                        if (!separate)
-                        {
-                            m_data.m_logs[idx].lines.Add(new Line() { direction = "response" });
-                        }
-                    }
-                    if (splitLine[i] == "Length")
-                    {
-                        int length = Convert.ToInt32(splitLine[i + 1].Trim(':'));
-                        int idx_2 = m_data.m_logs[idx].lines.Count - 1;
-                        if (length == 0)
-                        {
-                            m_data.m_logs[idx].lines[idx_2].Set("Timeout");                           
-                            break;
-                        }
-                        var addr = splitLine[i + 2];
-                        if (length == 1)
-                        {
-                            m_data.m_logs[idx].lines[idx_2].address = addr;
-                            separate = true;
-                            break;
-                        }
-                        int minus = separate ? 1 : 0;
-                        var command = splitLine[i + 3 - minus];
-                        var crc = splitLine[i + length] + ' ' + splitLine[i + length + 1];
-                        var raw_data = splitLine[i + 4 - minus];
-                        for (int j = i + 5 - minus; j < i + length; ++j)
-                        {
-                            raw_data += ' ' + splitLine[j];
-                        }
-                        if (separate)
-                            m_data.m_logs[idx].lines[idx_2].Set(command, crc, raw_data);
-                        else
-                            m_data.m_logs[idx].lines[idx_2].Set(addr, command, crc, raw_data);
-
-                        //m_data.m_logs[idx].lines[idx_2].raw_frame;
-                        separate = false;
                         break;
                     }
                 }
+
+                if (countPacketSeparate == 0)
+                    countPacketSeparate = 1;
+
+                string full_data = "";
+                int idx = 0;
+                int idx_2 = 0;
+                for (int k = 0; k < countPacketSeparate; ++k)
+                {
+                    line = lines[i+k].Replace('\t', ' ');
+                    List<string> splitLine = new List<string>(line.Split(' '));
+
+                    for (int j = 0; j < splitLine.Count; ++j)
+                    {
+                        if (k == 0)
+                        {
+                            if (splitLine[j] == "IRP_MJ_WRITE")
+                            {
+                                string address = splitLine[j + 1];
+                                idx = AddLine(address, "request");
+                                idx_2 = m_data.m_logs[idx].lines.Count - 1;
+                            }
+
+                            if (splitLine[j] == "IRP_MJ_READ")
+                            {
+                                string address = splitLine[j + 1];
+                                idx = AddLine(address, "response");
+                                idx_2 = m_data.m_logs[idx].lines.Count - 1;
+                            }
+                        }
+
+                        if (splitLine[j] == "Length")
+                        {
+                            int length = Convert.ToInt32(splitLine[j + 1].Trim(':'));
+                            if (length == 0)
+                            {
+                                m_data.m_logs[idx].lines[idx_2].Set("Timeout");
+                                break;
+                            }
+
+                            if(full_data.Equals(""))
+                            {
+                                full_data = splitLine[j + 2];
+                            }
+                            else
+                            {
+                                full_data += ' ' + splitLine[j + 2];
+                            }
+
+                            for(int iter = j+3; iter < j + 2 + length; ++iter)
+                            {
+                                full_data += ' ' + splitLine[iter];
+                            }
+                           
+                            break;
+                        }
+                    }
+                }
+                if (!full_data.Equals(""))
+                    m_data.m_logs[idx].lines[idx_2].SetAll(full_data);
+
+                i += countPacketSeparate;
+                countPacketSeparate = 0;
             }
+
+            //for(int k = 0; k < lines.Count; ++k)
+            //{
+            //    if (line.Contains("IRP_MJ_READ"))
+            //    {
+            //        check = true;
+            //    }
+
+            //    if (check)
+            //    {
+
+            //    }
+
+            //    line = line.Replace('\t', ' ');
+            //    var splitLine = line.Split(' ');
+
+            //    int idx = 0;
+
+            //    for (int i = 0; i < splitLine.Length; i++)
+            //    {
+            //        if (splitLine[i] == "IRP_MJ_WRITE")
+            //        {
+            //            string address = splitLine[i + 1];
+            //            idx = m_data.m_logs.FindIndex(x => x.address == address);
+            //            if (idx == -1 )
+            //            {
+            //                m_data.m_logs.Add(new Source()
+            //                { address = address });
+            //                idx = m_data.m_logs.Count - 1;
+            //            }
+            //            if (!separate)
+            //            {
+            //                m_data.m_logs[idx].lines.Add(new Line() { direction = "request" });
+            //            }
+            //        }
+
+            //        if (splitLine[i] == "IRP_MJ_READ")
+            //        {
+            //            string address = splitLine[i + 1];
+            //            idx = m_data.m_logs.FindIndex(x => x.address == address);
+            //            if (idx == -1)
+            //            {
+            //                m_data.m_logs.Add(new Source()
+            //                { address = address });
+            //                idx = m_data.m_logs.Count - 1;
+            //            }
+            //            if (!separate)
+            //            {
+            //                m_data.m_logs[idx].lines.Add(new Line() { direction = "response" });
+            //            }
+            //        }
+
+            //        if (splitLine[i] == "Length")
+            //        {
+            //            int length = Convert.ToInt32(splitLine[i + 1].Trim(':'));
+            //            int idx_2 = m_data.m_logs[idx].lines.Count - 1;
+            //            if (length == 0)
+            //            {
+            //                m_data.m_logs[idx].lines[idx_2].Set("Timeout");                           
+            //                break;
+            //            }
+            //            var addr = splitLine[i + 2];
+            //            if (length == 1)
+            //            {
+            //                m_data.m_logs[idx].lines[idx_2].address = addr;
+            //                separate = true;
+            //                break;
+            //            }
+
+            //            if (m_data.m_logs[idx].lines[idx_2].address != null)
+            //            {
+
+            //            }
+
+            //            for(int j = i + 2; j < i + length; ++j)
+            //            {
+            //                fullData += splitLine[i] + ' ';
+            //            }
+
+            //            int minus = separate ? 1 : 0;
+            //            var command = splitLine[i + 3 - minus];
+            //            var crc = splitLine[i + length] + ' ' + splitLine[i + length + 1];
+            //            var raw_data = splitLine[i + 4 - minus];
+            //            for (int j = i + 5 - minus; j < i + length; ++j)
+            //            {
+            //                raw_data += ' ' + splitLine[j];
+            //            }
+            //            if (separate)
+            //                m_data.m_logs[idx].lines[idx_2].Set(command, crc, raw_data);
+            //            else
+            //                m_data.m_logs[idx].lines[idx_2].Set(addr, command, crc, raw_data);
+
+            //            separate = false;
+            //            break;
+            //        }
+            //    }
+            //}
             
         }
 

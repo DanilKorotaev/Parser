@@ -1,15 +1,15 @@
 ﻿<Properties StartupConfiguration="{17AD8F80-9A3D-40F0-8E4C-1A05BD7303A4}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="ParserMODBUS/Program.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ParserMODBUS/Parser.cs">
     <Files>
-      <File FileName="ParserMODBUS/Parser.cs" Line="104" Column="72" />
-      <File FileName="ParserMODBUS/Program.cs" Line="18" Column="40" />
+      <File FileName="ParserMODBUS/Parser.cs" Line="233" Column="1" />
+      <File FileName="ParserMODBUS/Program.cs" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="ParserMODBUS" expanded="True">
             <Node name="ParserMODBUS" expanded="True">
-              <Node name="Program.cs" selected="True" />
+              <Node name="Parser.cs" selected="True" />
             </Node>
           </Node>
         </State>
